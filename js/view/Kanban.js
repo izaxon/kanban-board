@@ -6,7 +6,6 @@ export default class Kanban {
 
 		Kanban.columns().forEach(column => {
 			const columnView = new Column(column.id, column.title);
-
 			this.root.appendChild(columnView.elements.root);
 		});
 	}
@@ -15,14 +14,17 @@ export default class Kanban {
 		return [
 			{
 				id: 1,
+				// tag: "#backlog",
 				title: "Not Started"
 			},
 			{
 				id: 2,
+				// tag: "#inprogress",
 				title: "In Progress"
 			},
 			{
 				id: 3,
+				// tag: "#done",
 				title: "Completed"
 			}
 		];

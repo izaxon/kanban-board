@@ -17,14 +17,13 @@ export default class Column {
 		this.elements.items.appendChild(topDropZone);
 
 		this.elements.addItem.addEventListener("click", () => {
-			const newItem = KanbanAPI.insertItem(id, "");
-
-			this.renderItem(newItem);
+			KanbanAPI.insertItem(id, "")
+				.then(item => this.renderItem(item));
 		});
 
-		KanbanAPI.getItems(id).forEach(item => {
+		KanbanAPI.getItems(id).then(items => items.forEach(item => {
 			this.renderItem(item);
-		});
+		}));
 	}
 
 	static createRoot() {
@@ -42,8 +41,8 @@ export default class Column {
 	}
 
 	renderItem(data) {
-		const item = new Item(data.id, data.content);
-
+		const item = new Item(data.id, data.content, data.tag);
 		this.elements.items.appendChild(item.elements.root);
+		item.elements.input.focus();
 	}
 }

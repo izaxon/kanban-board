@@ -2,7 +2,7 @@ import DropZone from "./DropZone.js";
 import KanbanAPI from "../api/KanbanAPI.js";
 
 export default class Item {
-	constructor(id, content) {
+	constructor(id, content, tag) {
 		const bottomDropZone = DropZone.createDropZone();
 
 		this.elements = {};
@@ -10,6 +10,7 @@ export default class Item {
 		this.elements.input = this.elements.root.querySelector(".kanban__item-input");
 
 		this.elements.root.dataset.id = id;
+		this.elements.root.dataset.tag = tag;
 		this.elements.input.textContent = content;
 		this.content = content;
 		this.elements.root.appendChild(bottomDropZone);
@@ -17,14 +18,15 @@ export default class Item {
 		const onBlur = () => {
 			const newContent = this.elements.input.textContent.trim();
 
-			if (newContent == this.content) {
+			if (newContent === this.content) {
 				return;
 			}
 
 			this.content = newContent;
 
 			KanbanAPI.updateItem(id, {
-				content: this.content
+				content: this.content,
+				tag: this.elements.root.dataset.tag
 			});
 		};
 
@@ -33,7 +35,7 @@ export default class Item {
 			const check = confirm("Are you sure you want to delete this item?");
 
 			if (check) {
-				KanbanAPI.deleteItem(id);
+				KanbanAPI.deleteItem(id, this.content);
 
 				this.elements.input.removeEventListener("blur", onBlur);
 				this.elements.root.parentElement.removeChild(this.elements.root);
@@ -41,7 +43,7 @@ export default class Item {
 		});
 
 		this.elements.root.addEventListener("dragstart", e => {
-			e.dataTransfer.setData("text/plain", id);
+			e.dataTransfer.setData("application/json", JSON.stringify({ id, content }));
 		});
 
 		this.elements.input.addEventListener("drop", e => {
