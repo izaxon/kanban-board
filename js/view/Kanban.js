@@ -13,18 +13,15 @@ export default class Kanban {
 	static columns() {
 		return [
 			{
-				id: 1,
-				// tag: "#backlog",
+				id: "#backlog",
 				title: "Not Started"
 			},
 			{
-				id: 2,
-				// tag: "#inprogress",
+				id: "#inprogress",
 				title: "In Progress"
 			},
 			{
-				id: 3,
-				// tag: "#done",
+				id: "#done",
 				title: "Completed"
 			}
 		];

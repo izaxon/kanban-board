@@ -24,7 +24,7 @@ export default class DropZone {
 			dropZone.classList.remove("kanban__dropzone--active");
 
 			const columnElement = dropZone.closest(".kanban__column");
-			const columnId = Number(columnElement.dataset.id);
+			const columnId = columnElement.dataset.id;
 			const dropZonesInColumn = Array.from(columnElement.querySelectorAll(".kanban__dropzone"));
 			const droppedIndex = dropZonesInColumn.indexOf(dropZone);
 			const { id: itemId, content } = JSON.parse(e.dataTransfer.getData("application/json"));

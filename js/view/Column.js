@@ -34,8 +34,8 @@ export default class Column {
 		return range.createContextualFragment(`
 			<div class="kanban__column">
 				<div class="kanban__column-title"></div>
-				<div class="kanban__column-items"></div>
 				<button class="kanban__add-item" type="button">+ Add</button>
+				<div class="kanban__column-items"></div>
 			</div>
 		`).children[0];
 	}
